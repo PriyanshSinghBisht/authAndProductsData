@@ -2,26 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+html.dark body{
+    background-color: black;
+    color: white;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+.bdr{
+    border: 1px solid red;
+}
+.flexCenter{
+    display: flex;
+    justify-content: center;
+}
+.form{
+    max-width: 600px;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.form label{
+    padding: 0.5rem 0;
+    font-weight: 500;
+}
+.form input{
+    color: #777;
+    padding: 10px 50px 10px 10px;
+    border: 1px solid #ccc;
+}
+
+@keyframe (max-width: 640px){
+    .form input{
+        padding: 5px 50px 5px 5px;
+    }
 }
