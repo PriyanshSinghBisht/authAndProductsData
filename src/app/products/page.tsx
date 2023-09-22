@@ -1,9 +1,20 @@
-import axios from "axios";
+"use client"
 
-export default async function Products(){
-   const res = await axios.get(`${process.env.DOMAIN}/api/products`);
-    const products = res.data.data;
-    console.log(res);
+import axios from "axios";
+import { useState, useEffect } from "react";
+
+export default function Products(){
+   const [products, setProducts] = useState([{}]);
+
+   const getData = async ()=>{
+       const res = axios.get("/api/products");
+       const data = (await res).data.data;
+       setProducts(data)
+   }
+useEffect(()=>{
+   getData();
+},[]);
+      if(products)
     return(
        <div className="flexCenter flex-col items-center mt-10">
            <h1 className="sm:text-[50px] text-[25px] ">Product List</h1>
