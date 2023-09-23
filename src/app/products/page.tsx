@@ -2,19 +2,21 @@
 
 import axios from "axios";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
 export default function Products(){
    const [products, setProducts] = useState([{}]);
 
    const getData = async ()=>{
-       const res = axios.get("/api/products");
-       const data = (await res).data.data;
+       const res = await axios.get("/api/products");
+       console.log(res);
+       const data = res.data.data;
        setProducts(data)
    }
 useEffect(()=>{
    getData();
 },[]);
-      if(products)
+
     return(
        <div className="flexCenter flex-col items-center mt-10">
            <h1 className="sm:text-[50px] text-[25px] ">Product List</h1>
@@ -34,8 +36,8 @@ useEffect(()=>{
             })
           }
           <p>you can edit this list
-             from <a href="https://priyansh-productlist-mongodb.netlify.app/productlist" target="_blank"
-            className="underline text-blue-700 hover:text-blue-500">here</a>
+             from <Link href="https://priyansh-productlist-mongodb.netlify.app/productlist" target="_blank"
+            className="underline text-blue-700 hover:text-blue-500">here</Link>
           </p>
        </div>
     )

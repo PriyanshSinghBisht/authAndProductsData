@@ -1,12 +1,11 @@
 import mongoose from 'mongoose';
 
-export function connect() {
+export async function connect() {
   try {
-    if (!mongoose.connection.readyState) {
-      mongoose.connect(process.env.MONGO_URL, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      });
+
+    await mongoose.disconnect();
+      mongoose.connect(process.env.MONGO_URL);
+ 
 
       mongoose.connection.on('connected', () => {
         console.log('Connected to MongoDB users');
@@ -15,19 +14,15 @@ export function connect() {
       mongoose.connection.on('error', (err) => {
         console.log("MongoDB connection error: " + err);
       });
-    }
   } catch (error) {
     console.log(error);
   }
 }
 
-export function connectProducts() {
+export async function connectProducts() {
   try {
-    if (!mongoose.connection.readyState) {
-      mongoose.connect(process.env.PRODUCTS_MONGO_URL, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      });
+      await mongoose.disconnect();
+      mongoose.connect(process.env.PRODUCTS_MONGO_URL);
 
       mongoose.connection.on('connected', () => {
         console.log('Connected to MongoDB products');
@@ -36,7 +31,6 @@ export function connectProducts() {
       mongoose.connection.on('error', (err) => {
         console.log("MongoDB products connection error: " + err);
       });
-    }
   } catch (error) {
     console.log(error);
   }
