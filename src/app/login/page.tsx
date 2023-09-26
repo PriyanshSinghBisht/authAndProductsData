@@ -55,7 +55,7 @@ export default function Login(){
 
              <label htmlFor="password">Password</label>
              <div className="relative w-full">
-                 <input type={`${show?"text":"password"}`} name="password" placeholder="Enter password"
+                 <input type={`${show?"text":"password"}`} autoComplete="true" name="password" placeholder="Enter password"
                   className="w-full sm:pr-10 pr-5" 
                   value={user.password} onChange={(e)=>setUser({...user,password:e.target.value})}
                   />

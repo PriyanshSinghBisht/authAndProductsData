@@ -1,37 +1,29 @@
 import mongoose from 'mongoose';
 
-export async function connect() {
-  try {
+function makeNewConnection(uri) {
+  const db = mongoose.createConnection(uri, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+  });
 
-    await mongoose.disconnect();
-      mongoose.connect(process.env.MONGO_URL);
- 
+  db.on('error', function (error) {
+      console.log(`MongoDB :: connection ${this.name} ${JSON.stringify(error)}`);
+      db.close().catch(() => console.log(`MongoDB :: failed to close connection ${this.name}`));
+  });
 
-      mongoose.connection.on('connected', () => {
-        console.log('Connected to MongoDB users');
+  db.on('connected', function () {
+      mongoose.set('debug', function (col, method, query, doc) {
+          console.log(`MongoDB :: ${this.conn.name} ${col}.${method}(${JSON.stringify(query)},${JSON.stringify(doc)})`);
       });
+      console.log(`MongoDB :: connected ${this.name}`);
+  });
 
-      mongoose.connection.on('error', (err) => {
-        console.log("MongoDB connection error: " + err);
-      });
-  } catch (error) {
-    console.log(error);
-  }
+  db.on('disconnected', function () {
+      console.log(`MongoDB :: disconnected ${this.name}`);
+  });
+
+  return db;
 }
 
-export async function connectProducts() {
-  try {
-      await mongoose.disconnect();
-      mongoose.connect(process.env.PRODUCTS_MONGO_URL);
-
-      mongoose.connection.on('connected', () => {
-        console.log('Connected to MongoDB products');
-      });
-
-      mongoose.connection.on('error', (err) => {
-        console.log("MongoDB products connection error: " + err);
-      });
-  } catch (error) {
-    console.log(error);
-  }
-}
+export const connect = makeNewConnection(process.env.MONGO_URL);
+export const connectProducts = makeNewConnection(process.env.PRODUCTS_MONGO_URL);

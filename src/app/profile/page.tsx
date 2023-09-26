@@ -12,10 +12,13 @@ export default function Profile() {
 
   const getUserData = async () => {
     try {
-      let res: any = await axios.get("/api/user/profile");
-
-      setUsername(res.data.user.username);
-      setEmail(res.data.user.email);
+      let res: any = await fetch("/api/user/profile",{
+        method: "GET"
+      });
+      res = await res.json();
+      console.log(res);
+      setUsername(res.user.username);
+      setEmail(res.user.email);
     } catch (error: any) {
       toast.error(error.message);
     }
@@ -36,7 +39,7 @@ export default function Profile() {
 
   const handleUpdate = async()=>{
       try {
-          const res = await axios.post("api/user/reset/resetusername"
+          const res = await axios.post("api/user/profile"
           ,{username,email});
           toast.success(res.data.message);
           // handleLogout();

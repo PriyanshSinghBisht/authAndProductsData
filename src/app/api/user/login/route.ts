@@ -4,8 +4,6 @@ import { User } from "@/utils/model/userModel";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 
-connect();
-
 export async function POST(request: NextRequest){
      try {
         const reqBody = await request.json();

@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { connectProducts } from "../mongoDB";
 
 export const productModel = new mongoose.Schema({
      name: String,
@@ -8,4 +9,4 @@ export const productModel = new mongoose.Schema({
      category: String,
 })
 
-export const Product = mongoose.models.products || mongoose.model("products", productModel);
+export const Product = connectProducts.models.products || connectProducts.model("products", productModel);

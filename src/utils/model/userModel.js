@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import { connect } from '@/utils/mongoDB';
 
 const userModel = new mongoose.Schema({
     username: {
@@ -29,4 +30,4 @@ const userModel = new mongoose.Schema({
     verifyTokenExpiry: Date,
 })
 
-export const  User = mongoose.models.users || mongoose.model("users", userModel)
+export const  User = connect.models.users || connect.model("users", userModel)
